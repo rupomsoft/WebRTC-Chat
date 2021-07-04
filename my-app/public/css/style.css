@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+
 body{
+    font-family: 'Roboto Condensed', sans-serif;
     background: #FAFAFA !important;
 }
 
@@ -6,3 +9,28 @@ body{
     width: 40px;
     height: auto;
 }
+
+
+.form-control {
+    border-radius: 3px !important;
+    background-color: #FDFDFF !important;
+    font-weight: 400 !important;
+}
+.form-control:focus {
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    border: 1px solid #0D6EFD !important;
+
+}
+.btn {
+    border-radius: 3px !important;
+    cursor: pointer !important;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: none !important;
+}
+.btn:focus {
+    box-shadow: none !important;
+}
+.

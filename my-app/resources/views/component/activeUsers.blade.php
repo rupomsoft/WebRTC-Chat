@@ -1,17 +1,41 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="list-group mt-3">
-                <li class="list-group-item ">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-        </div>
+    <div id="ActiveList" class="row">
+
     </div>
 </div>
 
 <script>
-    alert("hhh")
+    getActiveUserList();
+    setInterval(function(){
+        getActiveUserList();
+    }, 40000);
+    function getActiveUserList() {
+
+        axios.get("api/ActiveList/"+getMobileNumber())
+            .then(function (res) {
+                if(res.status===200){
+                    $('#ActiveList').empty();
+                    $.each(res.data,function (i,MyList){
+                        let activeUser="<div class='col-md-3 text-center p-1 col-lg-3 col-sm-6 col-6'>" +
+                            "<div class='bg-white shadow-sm p-3'>" +
+                            "<h2><i class='fa fa-user-circle'></i></h2>"+
+                            "<h6>"+MyList['name']+" ("+MyList['mobile']+")"+"</h6>"+
+                            "<div class='input-group w-100 d-flex justify-content-center'>" +
+                            "<button class='btn mx-1 btn-light text-primary text-center'><i class='fa fa-comments'></i></button>" +
+                            "<button class='btn mx-1 btn-light text-primary text-center'><i class='fa fa-phone'></i></button>" +
+                            "<button class='btn mx-1 btn-light text-primary text-center' ><i class='fa fa-video'></i></button>" +
+                            "</div>"+
+                            "</div>" +
+                            "</div>"
+                        $('#ActiveList').append(activeUser);
+                    });
+                }
+                else {
+                    ErrorToast("Request Fail ! Try Again");
+                }
+            })
+            .catch(function (err) {
+                ErrorToast("Request Fail ! Try Again");
+            })
+    }
 </script>
