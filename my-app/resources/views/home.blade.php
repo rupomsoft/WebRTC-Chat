@@ -1,11 +1,13 @@
 @extends("layout.app")
 @section("section")
- @include('component.ChatModal')
+@include('component.ChatModal')
 @include('component.activeUsers')
 
 @endsection
 @section("script")
 <script>
+
+
     // Create Peer Global
 
     let peer = new Peer();
@@ -13,7 +15,6 @@
 
 
     CreatePeerIDAndStore();
-
     function CreatePeerIDAndStore(){
         peer.on("open",function (id) {
             setPeerID(id);
@@ -43,10 +44,8 @@
     function StartRefreshActiveUserList(){
         setInterval(function(){
             getActiveUserList();
-        }, 30000);
+        }, 5000);
     }
-
-
     function getActiveUserList() {
         axios.get("api/ActiveList/"+getMobileNumber())
             .then(function (res) {
@@ -56,7 +55,7 @@
                     $.each(res.data,function (i,MyList){
 
                         if(MyList['peer_id']!==getPeerID()){
-                            let activeUser="<div class='col-md-3 text-center p-1 col-lg-3 col-sm-6 col-6'>" +
+                            let activeUser="<div class='col-md-3  text-center p-1 col-lg-3 col-sm-6 col-6'>" +
                                 "<div class='bg-white shadow-sm p-3'>" +
                                 "<h2><i class='fa fa-user-circle'></i></h2>"+
                                 "<h6>"+MyList['name']+" ("+MyList['mobile']+")"+"</h6>"+
@@ -77,7 +76,12 @@
                         let peerid= $(this).data("peer");
                         let name= $(this).data("name");
 
-                        $('#ChatWith').html(name);
+
+                        $('#ChatRightNameTitle').html(name);
+                        $('#ChatRightName').val(name);
+                        $('#ChatRightPeerID').val(peerid);
+                        $('#ChatLeftName').val(getName());
+                        $('#ChatLeftPeerID').val(getPeerID());
                         $('#ChatModal').modal("show");
 
                         event.preventDefault();
@@ -96,20 +100,18 @@
 
 
 
-
     let ConnectedList=[]
     function ConnectWithActiveUniqueList(OtherPeerID){
         if(!ConnectedList.includes(OtherPeerID)){
-            conn= peer.connect(OtherPeerID);
-            conn.on('open',function () {
-                ConnectedList.push(OtherPeerID);
-                console.log(ConnectedList)
-            })
+            if(OtherPeerID!==getPeerID()){
+                conn= peer.connect(OtherPeerID);
+                conn.on('open',function () {
+                    ConnectedList.push(OtherPeerID);
+                    console.log(OtherPeerID)
+                })
+            }
         }
     }
-
-
-
 
 
 
@@ -117,7 +119,19 @@
     function GetReadyToReciveMessage(){
         peer.on('connection', function(conn) {
             conn.on('data', function(data){
-                console.log(data);
+                console.log(data)
+                if(data['task']==="chat"){
+
+
+                    $('#ChatRightNameTitle').html(data['ChatRightNameTitle']);
+                    $('#ChatRightName').val(data['ChatRightName']);
+                    $('#ChatRightPeerID').val(data['ChatRightPeerID']);
+                    $('#ChatLeftName').val(data['ChatLeftName']);
+                    $('#ChatLeftPeerID').val(data['ChatLeftPeerID']);
+                    $('#ChatModal').modal("show");
+
+
+                }
             });
         });
     }
@@ -125,11 +139,27 @@
 
 
 
-// Join
+// Chat Send
+    $('#ChatSend').on('click',function () {
+        let ChatLeftName=$('#ChatLeftName').val();
+        let ChatLeftPeerID=$('#ChatLeftPeerID').val();
+        let ChatRightName=$('#ChatRightName').val();
+        let ChatRightPeerID=$('#ChatRightPeerID').val();
+        let ChatText=$('#ChatText').val();
 
-
-
-
+        let conn = peer.connect(ChatRightPeerID);
+        conn.on('open', function(){
+            let chatObject={
+                "task":"chat",
+                "ChatLeftName":ChatLeftName,
+                "ChatLeftPeerID":ChatLeftPeerID,
+                "ChatRightName":ChatRightName,
+                "ChatRightPeerID":ChatRightPeerID,
+                "ChatText":ChatText,
+            }
+            conn.send(chatObject);
+        });
+    })
 
 
 

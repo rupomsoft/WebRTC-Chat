@@ -9,11 +9,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"></a>
                 </li>
-
             </ul>
             <form class="d-flex">
-
-
+               <span> <i class="fa fa-user-alt"></i><span class="mx-2" id="userName"></span></span>
+                <a href="{{"/join"}}" class="mx-1"><i class="fa fa-sign-out-alt"></i>Exit</a>
             </form>
         </div>
     </div>

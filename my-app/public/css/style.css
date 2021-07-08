@@ -5,6 +5,14 @@ body{
     background: #FAFAFA !important;
 }
 
+a{
+    text-decoration: none !important;
+    color: inherit;
+}
+a:hover{
+    text-decoration: none !important;
+    color: inherit;
+}
 .nav-logo{
     width: 40px;
     height: auto;

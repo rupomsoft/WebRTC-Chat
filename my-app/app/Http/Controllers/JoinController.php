@@ -48,7 +48,7 @@ class JoinController extends Controller
 
 
         $time = new DateTime();
-        $time->modify('-40 seconds');
+        $time->modify('-10 seconds');
         $time30sAgo=$time->format('U');
 
 
@@ -59,7 +59,7 @@ class JoinController extends Controller
     function CheckMobileNumberIsActive(Request $request){
         $mobile=$request->mobile;
         $time = new DateTime();
-        $time->modify('-40 seconds');
+        $time->modify('-10 seconds');
         $time30sAgo=$time->format('U');
         $result=ActiveUserModel::Where("look_up_time",">",$time30sAgo)->Where("mobile","=", $mobile)->count();
         return  $result;
