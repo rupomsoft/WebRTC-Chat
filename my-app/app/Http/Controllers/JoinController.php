@@ -46,11 +46,9 @@ class JoinController extends Controller
         $look_up_time=time();
         JoinModel::where('mobile', $mobile)->update(["look_up_time"=>$look_up_time]);
 
-
         $time = new DateTime();
         $time->modify('-10 seconds');
         $time30sAgo=$time->format('U');
-
 
         $result=ActiveUserModel::Where("look_up_time",">",$time30sAgo)->get();
         return  $result;
