@@ -2,7 +2,7 @@
 
 body{
     font-family: 'Roboto Condensed', sans-serif;
-    background: #FAFAFA !important;
+    background: #15192A !important;
 }
 
 a{
@@ -14,24 +14,46 @@ a:hover{
     color: inherit;
 }
 .nav-logo{
-    width: 40px;
+    width: 100px;
     height: auto;
 }
 
+.border-radius-4{
+    border-radius: 4px !important;
+}
+.border-radius-10{
+    border-radius: 10px !important;
+}
+
+.chat-item{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    border-radius: 0px 10px 0px 10px
+}
+
+.border-radius-0{
+    border-radius: 0 !important;
+}
+
+
 
 .form-control {
-    border-radius: 0 !important;
-    background-color: #FDFDFF !important;
+    color: white;
+    border: none !important;
+    border-radius: 3px !important;
+    background-color: #0B0E1E !important;
     font-weight: 400 !important;
 }
 .form-control:focus {
+    color: white;
     box-shadow: none !important;
-    border-radius: 0 !important;
-    border: 1px solid #0D6EFD !important;
+    border-radius:  3px !important;
+    border: none !important;
 
 }
 .btn {
-    border-radius: 0 !important;
+    border-radius:  3px !important;
     cursor: pointer !important;
     font-weight: 300;
     font-family: 'Roboto', sans-serif;
@@ -61,11 +83,35 @@ a:hover{
     min-height: 100vh;
 }
 
+
+.modal-header{
+    padding: 10px !important;
+    background: #15192A !important;
+    border: none !important;
+}
 .modal-content{
-    border-radius: 2px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #1F263C !important;
+    border-radius: 4px !important;
+}
+.modal-body{
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .chat-body{
-    height: 400px !important;
-    overflow-y: scroll;
+    padding: 10px !important;
+    height: 360px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+.bg-dark-blue{
+    background: #1F263C !important;
+}
+.active-icon{
+    cursor: pointer !important;
+    width: 40px;
+    height: auto;
+}
+

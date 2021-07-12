@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
         <div class="col-md-5 text-center col-lg-5 col-sm-10 col-10">
-            <div class="shadow-sm animated zoomIn bg-white">
+            <div class="shadow-sm animated border-radius-4 zoomIn bg-dark-blue">
                 <div class="px-5 py-5">
                     <img class="w-25" src="{{asset("images/webrtc2.png")}}">
                     <input id="name" placeholder="Your Name" type="text" class="form-control mt-3">

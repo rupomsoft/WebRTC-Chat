@@ -14,8 +14,6 @@
     // Create Peer Global
     let peer = new Peer();
     let conn = null;
-
-
     // Create New Peer ID And Store
     CreatePeerIDAndStore();
     function CreatePeerIDAndStore(){
@@ -38,16 +36,13 @@
             })
         })
     }
-
-
     // Start Refreshing Active User
+    // Ajax , Firebase, Socket IO
     function StartRefreshActiveUserList(){
         setInterval(function(){
             getActiveUserList();
         }, 5000);
     }
-
-
     //Get Active User List
     function getActiveUserList() {
         axios.get("api/ActiveList/"+getMobileNumber())
@@ -58,13 +53,13 @@
                     $.each(res.data,function (i,MyList){
                         if(MyList['peer_id']!==getPeerID()){
                             let activeUser="<div class='col-md-3  text-center p-1 col-lg-3 col-sm-6 col-6'>" +
-                                "<div class='bg-white shadow-sm p-3'>" +
-                                "<h2><i class='fa fa-user-circle'></i></h2>"+
-                                "<h6>"+MyList['name']+" ("+MyList['mobile']+")"+"</h6>"+
+                                "<div class='bg-dark-blue shadow-sm p-3'>" +
+                                "<h2><i class='fa text-white fa-user-circle'></i></h2>"+
+                                "<h6 class='text-white'>"+MyList['name']+"</h6>"+
                                 "<div class='input-group w-100 d-flex justify-content-center'>" +
-                                "<button data-name='"+MyList['name']+"' data-peer='"+MyList['peer_id']+"' class='btn mx-1 chat btn-light text-primary text-center'><i class='fa fa-comments'></i></button>" +
-                                "<button class='btn mx-1 btn-light text-primary text-center'><i class='fa fa-phone'></i></button>" +
-                                "<button data-name='"+MyList['name']+"' data-peer='"+MyList['peer_id']+"' class='btn video-call mx-1 btn-light text-primary text-center' ><i class='fa fa-video'></i></button>" +
+                                "<a data-name='"+MyList['name']+"' data-peer='"+MyList['peer_id']+"' class=' mx-1 chat  text-primary text-center'><img  class='active-icon' src='images/chat_icon.svg'/></a>" +
+                                "<a class='mx-1  text-primary text-center'><img class='active-icon' src='images/audio_call_icon.svg'/></a>" +
+                                "<a data-name='"+MyList['name']+"' data-peer='"+MyList['peer_id']+"' class=' video-call mx-1  text-primary text-center' ><img class='active-icon' src='images/video_call_icon.svg'/></i></a>" +
                                 "</div>"+
                                 "</div>" +
                                 "</div>"
@@ -94,6 +89,7 @@
                         $('#ChatRightNameTitleVideoCall').html(name);
                         $('#ChatRightNameVideoCall').val(name);
                         $('#ChatRightPeerIDVideoCall').val(peerid);
+
                         $('#ChatLeftNameVideoCall').val(getName());
                         $('#ChatLeftPeerIDVideoCall').val(getPeerID());
 
@@ -112,8 +108,6 @@
 
             })
     }
-
-
     // Connected With Unique Peer ID
     let ConnectedList=[]
     function ConnectWithActiveUniqueList(OtherPeerID){
@@ -132,8 +126,6 @@
             }
         }
     }
-
-
     // Chat Send
     $('#ChatSend').on('click',function () {
         let ChatLeftName=$('#ChatLeftName').val();
@@ -157,9 +149,10 @@
                 conn.send(chatObject);
                 ChatHistory.push(chatObject);
                 showChatHistory();
+                ChatBodyScrollDown();
                 $('#ChatText').val("");
             });
-            ChatBodyScrollDown();
+
         }
 
     })
@@ -167,17 +160,43 @@
         var objDiv = document.getElementById("chatHistory");
         objDiv.scrollTop = objDiv.scrollHeight;
     }
-
-
     // Show Chat History
     let ChatHistory=[];
     function showChatHistory(){
         $('#chatHistory').empty();
+
+        let LeftPeerID=$('#ChatLeftPeerID').val();
+
         $.each(ChatHistory,function (i,MyList){
-            let ChatLeft="<p><span class='text-dark'>"+MyList['ChatLeftName']+"<span>:<span class='text-primary'>"+MyList['ChatText']+"<span></p>";
-            $('#chatHistory').append(ChatLeft);
+
+            if(LeftPeerID===MyList['ChatLeftPeerID']){
+
+                let ChatLeft= "<div class='col-6 float-left p-2'>" +
+                    "<div class='bg-success p-2 chat-item text-white'>"+MyList['ChatText']+"</div>"+
+                    "</div>";
+                let EmptyDiv="<div class='col-6 p-2'></div>"
+                $('#chatHistory').append(ChatLeft+EmptyDiv);
+
+            }
+            else {
+                let ChatRight= "<div class='col-6 float-right p-2'>" +
+                    "<div class='bg-primary p-2 chat-item text-white'>"+MyList['ChatText']+"</div>"+
+                    "</div>";
+                let EmptyDiv2="<div class='col-6 p-2'></div>"
+                $('#chatHistory').append(EmptyDiv2+ChatRight);
+            }
+
+
         })
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -186,6 +205,7 @@
         let x = document.getElementById("callTune");
         x.play();
     }
+
     function  PauseRingTone(){
         let x = document.getElementById("callTune");
         x.pause();
@@ -202,6 +222,9 @@
         ReceiverVideo.srcObject=stream;
         ReceiverVideo.play();
     }
+
+
+
 
     //Send Call Invitation
     function SendCallInvitation(){
@@ -303,6 +326,8 @@
             });
         });
     }
+
+
 
 
 
