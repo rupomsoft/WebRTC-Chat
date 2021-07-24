@@ -228,6 +228,15 @@
 
     //Send Call Invitation
     function SendCallInvitation(){
+        SuccessToast("Call Invitation Send")
+
+        $('#MakerVideo').removeClass("video-preview")
+        $('#ReceiverVideo').removeClass("video-preview")
+
+        $('#MakerVideo').addClass("video-preview-animation")
+        $('#ReceiverVideo').addClass("video-preview-animation")
+
+
         let ChatLeftName=$('#ChatLeftNameVideoCall').val();
         let ChatLeftPeerID=$('#ChatLeftPeerIDVideoCall').val();
         let ChatRightName=$('#ChatRightNameVideoCall').val();
@@ -254,6 +263,7 @@
 
     //ReceiveCall
     function ReceiveCall(){
+        SuccessToast("Call Received")
         PauseRingTone();
         let getUserMedia = navigator.getUserMedia
         getUserMedia({video: true, audio: true}, function(stream) {
@@ -268,6 +278,11 @@
         });
     }
 
+
+    //
+   function callDrop(){
+        window.location.href='/'
+   }
 
     // MakeCall
     function MakeCall(){
@@ -315,6 +330,15 @@
                     $('#ChatRightPeerIDVideoCall').val(data['ChatLeftPeerID']);
                     $('#ChatLeftNameVideoCall').val(data['ChatRightName']);
                     $('#ChatLeftPeerIDVideoCall').val(data['ChatRightPeerID']);
+                    $('#callReceive').removeClass("d-none")
+                    $('#callMake').addClass("d-none")
+
+                    $('#MakerVideo').removeClass("video-preview")
+                    $('#ReceiverVideo').removeClass("video-preview")
+
+                    $('#MakerVideo').addClass("video-preview-animation")
+                    $('#ReceiverVideo').addClass("video-preview-animation")
+
                     $('#VideoCallModal').modal("show");
                     PlayRingTone();
                 }

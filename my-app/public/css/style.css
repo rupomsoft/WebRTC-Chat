@@ -103,7 +103,7 @@ a:hover{
 .chat-body{
     padding: 10px !important;
     height: 360px !important;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
 }
 .bg-dark-blue{
@@ -115,3 +115,21 @@ a:hover{
     height: auto;
 }
 
+.video-preview{
+    height: 260px;
+    border: 1px solid #15192A;
+    border-radius: 4px !important;
+}
+
+.video-preview-animation{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../images/radio.svg");
+    height: 260px;
+    border: 1px solid #15192A;
+    border-radius: 4px !important;
+}
+
+.call-btn-icon{
+    width: 60px;
+}
